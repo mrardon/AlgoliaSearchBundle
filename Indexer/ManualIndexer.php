@@ -245,6 +245,9 @@ class ManualIndexer
             try {
                 // Copy settings from master index to temporary index
                 $masterSettings = $this->indexer->getIndex($targetIndexName)->getSettings();
+                if (array_key_exists('version', $masterSettings)) {
+                    unset($masterSettings['version']);
+                }                
                 $this->indexer->getIndex($indexTo)->setSettings($masterSettings);
             } catch (\AlgoliaSearch\AlgoliaException $e) {
                 // It's OK if the master index did not exist! No settings to set.
